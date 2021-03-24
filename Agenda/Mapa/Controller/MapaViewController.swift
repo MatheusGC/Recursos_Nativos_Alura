@@ -30,7 +30,6 @@ class MapaViewController: UIViewController, CLLocationManagerDelegate {
         self.navigationItem.title = getTitulo()
         verificaAutorizacaoDoUsuario()
         localizacaoInicial()
-        localizarAluno()
         mapa.delegate = localizacao
         gerenciadorDeLocalizacao.delegate = self
     }
@@ -67,6 +66,7 @@ class MapaViewController: UIViewController, CLLocationManagerDelegate {
             let regiao = MKCoordinateRegionMakeWithDistance(pino.coordinate, 5000, 5000)
             self.mapa.setRegion(regiao, animated: true)
             self.mapa.addAnnotation(pino)
+            self.localizarAluno()
         }
     }
     
@@ -75,6 +75,7 @@ class MapaViewController: UIViewController, CLLocationManagerDelegate {
             Localizacao().converteEnderecoEmCoordenadas(aluno.endereco!) { (localizacaoEncontrada) in
                 let pino = Localizacao().configuraPino(aluno.nome!, localizacaoEncontrada, nil, nil)
                 self.mapa.addAnnotation(pino)
+                self.mapa.showAnnotations(self.mapa.annotations, animated: true)
             }
         }
         
